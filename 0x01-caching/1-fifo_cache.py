@@ -22,7 +22,7 @@ class FIFOCache(BaseCaching):
         '''
         Assign an item to cache
         '''
-        if key is None and item is None:
+        if key is None or item is None:
             return
 
         if key in self.cache_data:
