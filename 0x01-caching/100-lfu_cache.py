@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 '''
-A module LRUCache
+A module LFUCache
 '''
 
 BaseCaching = __import__('base_caching').BaseCaching
 
 
-class LRUCache(BaseCaching):
+class LFUCache(BaseCaching):
     ''' Inherits from Base Model
     Uses  last recently used to cache data
     '''
@@ -14,6 +14,7 @@ class LRUCache(BaseCaching):
         ''' Initialize
         '''
         super().__init__()
+        self.frequency = {}  # Tracks access frequency of each key
         self.cache = []  # A list of cached cache
 
     def put(self, key, item):
@@ -25,12 +26,13 @@ class LRUCache(BaseCaching):
 
         if key in self.cache_data:
             #  Remove key from cache if already exists
+            self.cache_data[key] = item
             self.cache.remove(key)
 
         elif len(self.cache_data) >= BaseCaching.MAX_ITEMS:
-            lru_key = self.cache.pop(0)
-            del self.cache_data[lru_key]
-            print(f"DISCARD: {lru_key}")
+            lfu_key = self.cache.pop()
+            del self.cache_data[lfu_key]
+            print(f"DISCARD: {lfu_key}")
 
         self.cache_data[key] = item  # Add item to cache
         self.cache.append(key)  # update cache
