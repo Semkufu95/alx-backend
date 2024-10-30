@@ -41,4 +41,4 @@ class LIFOCache(BaseCaching):
         '''
         Retrieves value of self.cache_data linked to key
         '''
-        return self.cache_data(key, None)
+        return self.cache_data.get(key, None)
