@@ -25,7 +25,11 @@ class FIFOCache(BaseCaching):
         if key is None and item is None:
             return
 
-        if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+        if key in self.cache_data:
+            # Remove key from cache if already exists
+            self.cache.remove(key)
+
+        elif len(self.cache_data) >= BaseCaching.MAX_ITEMS:
             # remove and print first item
             first_key = self.cache.pop(0)
             del self.cache_data[first_key]
